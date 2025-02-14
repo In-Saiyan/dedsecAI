@@ -1,0 +1,27 @@
+[
+    {
+        "timestamp": "2025-02-14T18:19:12+00:00",
+        "event_id": 1,
+        "message": "<The description for Event ID ( 999 ) in Source ( 'TestSource' ) could not be found. It contains the following insertion string(s):'Network anomaly detected virus virus virus virus'.>"
+    },
+    {
+        "timestamp": "2025-02-14T17:43:12+00:00",
+        "event_id": 4,
+        "message": "<The description for Event ID ( 16394 ) in Source ( 'Software Protection Platform Service' ) could not be found. It contains the following insertion string(s):''.>"
+    },
+    {
+        "timestamp": "2025-02-14T18:25:50+00:00",
+        "event_id": 1,
+        "message": "<The description for Event ID ( 1000 ) in Source ( 'CustomAnomalySource' ) could not be found. It contains the following insertion string(s):'Windows:TROjannnaoefnaienfa'.>"
+    },
+    {
+        "timestamp": "2025-02-14T18:32:46+00:00",
+        "event_id": 5,
+        "message": "<The description for Event ID ( 999 ) in Source ( 'TestSource' ) could not be found. It contains the following insertion string(s):'Memory Injectoreiofjawoenfonfaefaga4wg4wg3gf3q2rjhwrjh3o2hjorno2jqnr3jrq'.>"
+    },
+    {
+        "timestamp": "2025-02-14T18:41:55+00:00",
+        "event_id": 5,
+        "message": "<The description for Event ID ( 999 ) in Source ( 'TestSource' ) could not be found. It contains the following insertion string(s):'memory-exploit:cefea'.>"
+    }
+]
