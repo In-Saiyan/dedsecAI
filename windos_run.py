@@ -5,12 +5,10 @@ import json
 import xgboost as xgb
 import win32evtlog
 import win32evtlogutil
-import win32con
 import time
 import os
 from datetime import datetime, timezone
 from sklearn.preprocessing import StandardScaler
-from collections import deque
 
 # Device configuration
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -42,19 +40,30 @@ class Autoencoder(nn.Module):
 # Load trained Autoencoder model
 input_dim = 3  # Timestamp, Event ID, Frequency
 model = Autoencoder(input_dim).to(device)
-model.load_state_dict(torch.load("cbs_anomaly_detector.pth", map_location=device))
+model.load_state_dict(torch.load("./models/cbs_anomaly_detector.pth", map_location=device))
 model.eval()
 
 # Load trained XGBoost model
 xgb_model = xgb.XGBClassifier()
-xgb_model.load_model("xgb_anomaly_detector.json")
+xgb_model.load_model("./models/xgb_anomaly_detector.json")
 
 # StandardScaler (Ensure consistency)
 scaler = StandardScaler()
 
 # Event Mapping
 event_id_map = {}
-event_queue = deque(maxlen=1000)  # Store recent events
+
+# Keep track of seen events (timestamp, event_id) to avoid duplicate processing
+SEEN_EVENTS_FILE = "./output/seen_events.json"
+seen_events = set()
+
+# Load previously seen events (Persistent across runs)
+if os.path.exists(SEEN_EVENTS_FILE):
+    with open(SEEN_EVENTS_FILE, "r", encoding="utf-8") as f:
+        try:
+            seen_events = set(tuple(event) for event in json.load(f))
+        except json.JSONDecodeError:
+            seen_events = set()
 
 # Read Windows Event Log
 LOG_TYPE = "System"  # Change to "Application" or another log source as needed
@@ -64,7 +73,6 @@ def fetch_windows_events():
     try:
         hand = win32evtlog.OpenEventLog(None, LOG_TYPE)
         flags = win32evtlog.EVENTLOG_BACKWARDS_READ | win32evtlog.EVENTLOG_SEQUENTIAL_READ
-        total = win32evtlog.GetNumberOfEventLogRecords(hand)
         records = win32evtlog.ReadEventLog(hand, flags, 0)
         for event in records:
             timestamp = event.TimeGenerated.timestamp()
@@ -74,7 +82,15 @@ def fetch_windows_events():
             if event_id not in event_id_map:
                 event_id_map[event_id] = len(event_id_map) + 1
             
+            event_key = (timestamp, event_id_map[event_id])
+
+            # Skip event if it's already processed
+            if event_key in seen_events:
+                continue
+
+            seen_events.add(event_key)
             logs.append((timestamp, event_id_map[event_id], message))
+
         win32evtlog.CloseEventLog(hand)
     except Exception as e:
         print(f"Error reading event log: {e}")
@@ -95,8 +111,7 @@ def detect_anomalies():
     data = np.array([[timestamps[i], event_ids[i], frequencies[event_ids[i]]] for i in range(len(events))])
 
     # Normalize Data
-    if len(event_queue) == 0:
-        scaler.fit(data)  # Fit only once
+    scaler.fit(data)  # Fit only once
     data = scaler.transform(data)
 
     data_tensor = torch.tensor(data, dtype=torch.float32).to(device)
@@ -116,7 +131,7 @@ def detect_anomalies():
     for i, event in enumerate(events):
         if anomalies[i] or anomaly_predictions[i]:
             anomaly_logs.append({
-                "timestamp": datetime.fromtimestamp(event[0], datetime.timezone.utc).isoformat(),
+                "timestamp": datetime.fromtimestamp(event[0], timezone.utc).isoformat(),
                 "event_id": event[1],
                 "message": event[2]
             })
@@ -125,7 +140,7 @@ def detect_anomalies():
     if anomaly_logs:
         save_anomalies_to_json(anomaly_logs)
 
-def save_anomalies_to_json(new_anomalies, filename="anomalies.json"):
+def save_anomalies_to_json(new_anomalies, filename="./output/anomalies.json"):
     # Load existing anomalies if file exists
     if os.path.exists(filename) and os.path.getsize(filename) > 0:
         with open(filename, "r", encoding="utf-8") as f:
@@ -145,12 +160,22 @@ def save_anomalies_to_json(new_anomalies, filename="anomalies.json"):
 
     print(f"{len(new_anomalies)} anomalies detected and saved.")
 
+# Save seen events to file to persist across runs
+def save_seen_events():
+    with open(SEEN_EVENTS_FILE, "w", encoding="utf-8") as f:
+        json.dump(list(seen_events), f)
+
 # Monitor logs in real-time
 def monitor_logs():
     print("Monitoring Windows Event Logs for anomalies...")
-    while True:
-        detect_anomalies()
-        time.sleep(5)  # Wait for 5 seconds before checking again
+    try:
+        while True:
+            detect_anomalies()
+            save_seen_events()  # Persist seen events to file
+            time.sleep(5)  # Wait for 5 seconds before checking again
+    except KeyboardInterrupt:
+        print("\nStopping monitoring. Saving seen events.")
+        save_seen_events()
 
 if __name__ == "__main__":
     monitor_logs()

@@ -125,7 +125,7 @@ for epoch in range(num_epochs):
     print(f"Epoch {epoch+1}/{num_epochs}, Loss: {epoch_loss / len(train_loader):.6f}")
 
 # Save trained Autoencoder
-torch.save(autoencoder.state_dict(), "cbs_anomaly_detector.pth")
+torch.save(autoencoder.state_dict(), "./models/cbs_anomaly_detector.pth")
 print("Autoencoder training complete! Model saved.")
 
 # Anomaly Detection
@@ -173,5 +173,5 @@ for epoch in range(num_epochs):
     print(f"Epoch {epoch+1}/{num_epochs}, Loss: {epoch_loss / len(train_loader):.6f}")
 
 # Save PyTorch Classifier
-torch.save(classifier.state_dict(), "anomaly_classifier.pth")
+torch.save(classifier.state_dict(), "./models/anomaly_classifier.pth")
 print("Classifier training complete! Model saved.")

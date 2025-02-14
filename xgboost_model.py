@@ -112,7 +112,7 @@ for epoch in range(num_epochs):
     print(f"Epoch {epoch+1}/{num_epochs}, Loss: {epoch_loss / len(dataloader):.6f}")
 
 # Save trained model
-torch.save(model.state_dict(), "cbs_anomaly_detector.pth")
+torch.save(model.state_dict(), "./models/cbs_anomaly_detector.pth")
 print("Training complete! Model saved.")
 
 # XGBoost for Anomaly Detection
@@ -138,5 +138,5 @@ xgb_model = xgb.XGBClassifier(
 )
 xgb_model.fit(X_train, y_train)
 
-xgb_model.save_model("xgb_anomaly_detector.json")
+xgb_model.save_model("./models/xgb_anomaly_detector.json")
 print("XGBoost model trained and saved!")
