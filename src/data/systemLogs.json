@@ -1,0 +1,12 @@
+[
+    {
+        "timestamp": "2025-02-12T22:10:41",
+        "event_id": 1,
+        "message": "Name resolution for the name t-ring-fdv2.msedge.net timed out after none of the configured DNS servers responded. Client PID 10652.\r\n"
+    },
+    {
+        "timestamp": "2025-02-12T20:07:52",
+        "event_id": 5,
+        "message": "The time provider 'VMICTimeProvider' has indicated that the current hardware and operating environment is not supported and has stopped. This behavior is expected for VMICTimeProvider on non-HyperV-guest environments. This may be the expected behavior for the current provider in the current operating environment as well.\r\n"
+    }
+]
