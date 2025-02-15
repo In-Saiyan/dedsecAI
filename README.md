@@ -4,7 +4,7 @@
 Cybersecurity incidents require swift and accurate forensic analysis, but traditional methods rely heavily on manual processes. These methods are often time-consuming, labor-intensive, and prone to human error, delaying effective incident response. **DedsecAI** leverages artificial intelligence to automate and enhance post-incident cybersecurity forensic analysis, ensuring faster, more accurate investigations.
 
 ## Demo Video - Deployed Project Link
-- **Demo Video:** https://drive.google.com/file/d/1LX3Z8lvVddHXDWg5j6HGWXNDS4WcUGHa/view?usp=sharing
+- **Demo Video:** https://drive.google.com/file/d/1LX3Z8lvVddHXDWg5j6HGWXNDS4WcUGHa/view?usp=sharing | https://drive.google.com/file/d/1RYkYK-bEWACamSoBfsD1mvq4ecgrMKQ7/view?usp=sharing
 - **Deployed Project:** https://dedsecai-hof.vercel.app/
 
 ## Features and Functions
