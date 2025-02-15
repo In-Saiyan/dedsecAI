@@ -1,36 +1,28 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Hackofiesta 6.0 - DedsecAI
 
-## Getting Started
+## Introduction
+Cybersecurity incidents require swift and accurate forensic analysis, but traditional methods rely heavily on manual processes. These methods are often time-consuming, labor-intensive, and prone to human error, delaying effective incident response. **DedsecAI** leverages artificial intelligence to automate and enhance post-incident cybersecurity forensic analysis, ensuring faster, more accurate investigations.
 
-First, run the development server:
+## Demo Video - Deployed Project Link
+- **Demo Video:** [Insert Video Link]
+- **Deployed Project:** [Insert Deployment Link]
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features and Functions
+1. **Automated Breach Detection:** AI-driven analysis to identify anomalies and unauthorized access.
+2. **Timeline Reconstruction:** Tracks events leading up to and following a breach for clear incident visualization.
+3. **Attack Vector Identification:** Determines the specific methods used by attackers.
+4. **Impacted Systems Analysis:** Identifies compromised assets and prioritizes response efforts.
+5. **AI Algorithm Integration:** Uses machine learning for faster and more accurate forensic analysis.
+6. **Data Visualization:** Provides easy-to-interpret visual reports of the investigation results.
+7. **Predictive Analytics:** Utilizes historical data to anticipate potential cybersecurity threats.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Technology Stack
+- **Frontend:** React, D3.js
+- **Backend:** Flask
+- **Database:** MongoDB, Pandas
+- **AI/ML:** PyTorch
+- **Other Technologies:** Natural Language Processing (NLP), Predictive Analytics, SIEM Tool Integration
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Conclusion
+**DedsecAI** enhances cybersecurity forensic analysis by automating data collection, breach detection, and impact assessment using AI. By leveraging advanced technologies, it reduces human error, accelerates investigations, and strengthens security responses. The integration of predictive analytics and real-time threat detection ensures proactive risk management, making it a vital tool for modern cybersecurity.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
